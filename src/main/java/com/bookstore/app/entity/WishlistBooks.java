@@ -1,4 +1,4 @@
 package com.bookstore.app.entity;
 
-public class Wishlist {
+public class WishlistBooks {
 }
