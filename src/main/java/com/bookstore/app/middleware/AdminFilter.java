@@ -15,7 +15,7 @@ import java.io.IOException;
 @Component
 @Order(1)
 public class AdminFilter implements Filter {
-  @SuppressWarnings("SpringJavaAutowiringInspection")
+
   @Autowired
   private UserRepo userRepo;
 

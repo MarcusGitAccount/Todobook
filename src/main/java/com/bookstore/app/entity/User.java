@@ -1,8 +1,9 @@
 package com.bookstore.app.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
-//import org.springframework.security.crypto.bcrypt.BCrypt;
 import javax.persistence.*;
+import java.util.LinkedList;
 import java.util.UUID;
 
 @Data
@@ -34,4 +35,19 @@ public class User {
   private String password;
 
   private String saltedHash;
+
+  @ManyToMany
+  @JoinTable(
+      name = "user_book_wishlist",
+      joinColumns = @JoinColumn(name = "user_id"),
+      inverseJoinColumns = @JoinColumn(name = "book_id"))
+  @JsonManagedReference
+  private LinkedList<Book> wishlistBooks;
+
+  @OneToMany
+  @JoinColumn(name = "comment_id")
+  @JsonManagedReference
+  private LinkedList<Comment> comments;
+
+  // TODO: add loan books list
 }

@@ -13,6 +13,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Author {
+
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "uid", columnDefinition = "CHAR(36)")
