@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
-public class UserValidation implements BaseValidator<User> {
+public class UserValidation implements BaseValidation<User> {
 
   @Autowired
   private UserRepo userRepo;

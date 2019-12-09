@@ -2,6 +2,6 @@ package com.bookstore.app.validation;
 
 import com.bookstore.app.validation.util.ValidationMessage;
 
-public interface BaseValidator<T> {
+public interface BaseValidation<T> {
   ValidationMessage validate(T t);
 }

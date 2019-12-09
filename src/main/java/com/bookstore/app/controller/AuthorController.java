@@ -2,82 +2,65 @@ package com.bookstore.app.controller;
 
 import com.bookstore.app.controller.request.model.UserPut;
 import com.bookstore.app.controller.response.model.UserResponseEntity;
+import com.bookstore.app.entity.Author;
 import com.bookstore.app.entity.Company;
 import com.bookstore.app.entity.User;
 import com.bookstore.app.middleware.util.MiddlewareUtils;
-import com.bookstore.app.repo.CompanyRepo;
-import com.bookstore.app.repo.UserRepo;
+import com.bookstore.app.repo.AuthorRepo;
 import com.bookstore.app.responsefactory.APIResponseFactory;
-import com.bookstore.app.validation.UserValidation;
+import com.bookstore.app.validation.AuthorValidation;
 import com.bookstore.app.validation.util.ValidationMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
-
 import static com.bookstore.app.controller.util.Constants.*;
 
 @RestController
-public class UserController {
+public class AuthorController {
 
   @Autowired
-  private UserRepo userRepo;
+  private AuthorRepo authorRepo;
 
   @Autowired
-  private CompanyRepo companyRepo;
+  private AuthorValidation authorValidation;
 
-  @Autowired
-  private UserValidation userValidation;
+  @GetMapping("/api/author")
+  public ResponseEntity get() {
+    List<Author> authors = authorRepo.findAll();
 
-  @GetMapping("/api/user")
-  public ResponseEntity get(@RequestHeader("authorization") String token) {
-    String email = MiddlewareUtils.getEmailFromToken(token);
-    User user = userRepo.findByEmail(email).orElse(null);
-
-    if (user == null) {
-      return APIResponseFactory.buildDefaultErrorMessage(null, "No user found.");
+    if (authors.size() == 0) {
+      return APIResponseFactory.buildDefaultErrorMessage(null, ENTITY_NOT_FOUND);
     }
 
     return APIResponseFactory
-        .buildDefaultSuccesMessage(new UserResponseEntity(user), "Retrieved logged in user.");
+        .buildDefaultSuccesMessage(authors, ENTITY_FOUND);
   }
 
-  @GetMapping("/admin/user/{id}")
-  public ResponseEntity get(@PathVariable UUID id) {
-    User existing = userRepo.findById(id).orElse(null);
+  @GetMapping("/api/author/{id}")
+  public ResponseEntity getById(@PathVariable UUID id) {
+    Author existing = authorRepo.findById(id).orElse(null);
 
     if (existing == null) {
       return APIResponseFactory.buildErrorMessage(null, ENTITY_NOT_FOUND, HttpStatus.NOT_FOUND);
     }
-
-    existing = userRepo.save(existing.toBuilder().build());
-    if (existing == null) {
-      return APIResponseFactory.buildDefaultErrorMessage(null, ENTITY_ALTERATION_FAILED);
-    }
-
     return APIResponseFactory
-        .buildSuccesMessage(new UserResponseEntity(existing), ENTITY_MODIFIED, HttpStatus.OK);
+        .buildDefaultSuccesMessage(existing, ENTITY_MODIFIED);
   }
 
-   // Users are to be created only via sign up
-  @PostMapping("/admin/user")
-  public ResponseEntity post(@RequestBody User user,
-                             @RequestBody UUID companyId) {
+  @PostMapping("/admin/author")
+  public ResponseEntity post(@RequestBody Author author) {
     return APIResponseFactory.buildSuccesMessage(null, "Not implemented", HttpStatus.NOT_IMPLEMENTED);
   }
+/*
+  @PutMapping("/admin/author/{id}")
+  public ResponseEntity put(@RequestBody UserPut userModifications, @PathVariable UUID id) {
 
-  @PutMapping({"/admin/user/{id}", "/api/user/{id}"})
-  public ResponseEntity put(@RequestBody User user,
-                            @PathVariable UUID id,
-                            @RequestHeader("authorization") String token) {
-
-    UUID companyId = null;
-    if (user.getCompany() != null) {
-      companyId = user.getCompany().getUid();
-    }
-
+    User user = userModifications.getUser();
+    UUID companyId = userModifications.getCompanyId();
     User existing = userRepo.findById(id).orElse(null);
     if (existing == null) {
       return APIResponseFactory.buildErrorMessage(null, ENTITY_NOT_FOUND, HttpStatus.NOT_FOUND);
@@ -98,8 +81,6 @@ public class UserController {
       if (company != null) {
         user.setCompany(company);
       }
-    } else {
-      user.setCompany(null);
     }
 
     // we don't want to change these, yet
@@ -121,11 +102,11 @@ public class UserController {
     return APIResponseFactory
         .buildSuccesMessage(new UserResponseEntity(user), ENTITY_MODIFIED, HttpStatus.OK);
   }
-
-  @DeleteMapping("/admin/user/{id}")
+*/
+  @DeleteMapping("/admin/author/{id}")
   public ResponseEntity deleteById(@PathVariable UUID id) {
     Boolean wasRemoved = false;
-    User existing = userRepo.findById(id).orElse(null);
+    Author existing = authorRepo.findById(id).orElse(null);
 
     if (id == null) {
       return APIResponseFactory.buildDefaultErrorMessage(null, ENTITY_NOT_FOUND);
@@ -133,8 +114,8 @@ public class UserController {
     if (existing == null) {
       return APIResponseFactory.buildErrorMessage(null, ENTITY_DELETE_FAILED, HttpStatus.NOT_FOUND);
     }
-    userRepo.delete(existing);
+    authorRepo.delete(existing);
     return APIResponseFactory
-        .buildDefaultSuccesMessage(new UserResponseEntity(existing), ENTITY_DELETED);
+        .buildDefaultSuccesMessage(existing, ENTITY_DELETED);
   }
 }

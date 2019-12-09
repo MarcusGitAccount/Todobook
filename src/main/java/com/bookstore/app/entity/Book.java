@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -41,15 +42,15 @@ public class Book {
       name = "book_categories",
       joinColumns = @JoinColumn(name = "book_id"),
       inverseJoinColumns = @JoinColumn(name = "category_id"))
-  @JsonManagedReference // to prevent infinite loop queries
-  private LinkedList<Category> categories;
+  @JsonManagedReference(value = "book-category") // to prevent infinite loop queries
+  private List<Category> categories;
 
   @ManyToMany(mappedBy = "wishlistBooks")
-  @JsonBackReference
-  private LinkedList<User> usersWishlists;
+  @JsonBackReference(value = "wishlist")
+  private List<User> usersWishlists;
 
   @OneToMany
   @JoinColumn(name = "comment_id")
-  @JsonManagedReference
-  private LinkedList<Comment> comments;
+  @JsonManagedReference(value = "book-comment")
+  private List<Comment> comments;
 }

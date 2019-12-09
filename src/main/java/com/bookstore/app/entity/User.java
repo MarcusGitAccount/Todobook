@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import javax.persistence.*;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -41,13 +42,13 @@ public class User {
       name = "user_book_wishlist",
       joinColumns = @JoinColumn(name = "user_id"),
       inverseJoinColumns = @JoinColumn(name = "book_id"))
-  @JsonManagedReference
-  private LinkedList<Book> wishlistBooks;
+  @JsonManagedReference(value = "wishlist")
+  private List<Book> wishlistBooks;
 
   @OneToMany
   @JoinColumn(name = "comment_id")
-  @JsonManagedReference
-  private LinkedList<Comment> comments;
+  @JsonManagedReference(value = "user-comment")
+  private List<Comment> comments;
 
   // TODO: add loan books list
 }

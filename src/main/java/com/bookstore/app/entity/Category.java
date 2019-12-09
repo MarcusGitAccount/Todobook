@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -29,7 +30,7 @@ public class Category {
   private String description;
 
   @ManyToMany(mappedBy = "categories")
-  @JsonBackReference
-  private LinkedList<Book> books;
+  @JsonBackReference(value = "book-category")
+  private List<Book> books;
 
 }

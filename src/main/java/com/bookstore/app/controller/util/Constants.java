@@ -23,6 +23,8 @@ public class Constants {
   public static final String ENTITY_DELETED = "Deleted entity.";
 
   public static final String INVALID_USER = "Invalid user.";
-  public static final String INVALID_PASSWORD = "Invalid password." ;
+
+  public static final String INVALID_PASSWORD = "Invalid password.";
+
   public static final String USER_LOGGED_IN = "Logged in.";
 }
