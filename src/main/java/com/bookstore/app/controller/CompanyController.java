@@ -36,7 +36,7 @@ public class CompanyController {
     return APIResponseFactory.buildDefaultSuccesMessage(company, ENTITY_CREATED);
   }
 
-  @GetMapping("/api/company")
+  @GetMapping({"/api/company", "/admin/company"})
   public ResponseEntity getAll() {
     List<Company> result = companyRepo.findAll();
 
@@ -46,8 +46,9 @@ public class CompanyController {
     return APIResponseFactory.buildDefaultSuccesMessage(result, ENTITY_FOUND);
   }
 
-  @GetMapping("/admin/company/{id}")
+  @GetMapping({"/api/company/{id}", "/admin/company/{id}"})
   public ResponseEntity getById(@PathVariable UUID id) {
+
     Company company = companyRepo.findById(id).orElse(null);
 
     if (company == null) {
@@ -58,6 +59,11 @@ public class CompanyController {
 
   @PostMapping("/admin/company")
   public ResponseEntity post(@RequestBody Company company) {
+    ValidationMessage validationMessage = companyValidation.validate(company);
+    if (!validationMessage.getIsValid()) {
+      return APIResponseFactory.buildMessageFromEntityValidation(validationMessage);
+    }
+
     Company result = companyRepo.save(company);
 
     if (result == null) {

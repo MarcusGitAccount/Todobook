@@ -1,11 +1,6 @@
 package com.bookstore.app.controller;
 
-import com.bookstore.app.controller.request.model.UserPut;
-import com.bookstore.app.controller.response.model.UserResponseEntity;
 import com.bookstore.app.entity.Author;
-import com.bookstore.app.entity.Company;
-import com.bookstore.app.entity.User;
-import com.bookstore.app.middleware.util.MiddlewareUtils;
 import com.bookstore.app.repo.AuthorRepo;
 import com.bookstore.app.responsefactory.APIResponseFactory;
 import com.bookstore.app.validation.AuthorValidation;
@@ -28,7 +23,7 @@ public class AuthorController {
   @Autowired
   private AuthorValidation authorValidation;
 
-  @GetMapping("/api/author")
+  @GetMapping({"/api/author", "/admin/author"})
   public ResponseEntity get() {
     List<Author> authors = authorRepo.findAll();
 
@@ -40,7 +35,7 @@ public class AuthorController {
         .buildDefaultSuccesMessage(authors, ENTITY_FOUND);
   }
 
-  @GetMapping("/api/author/{id}")
+  @GetMapping({"/api/author/{id}", "/admin/author/{id}"})
   public ResponseEntity getById(@PathVariable UUID id) {
     Author existing = authorRepo.findById(id).orElse(null);
 
@@ -53,56 +48,40 @@ public class AuthorController {
 
   @PostMapping("/admin/author")
   public ResponseEntity post(@RequestBody Author author) {
-    return APIResponseFactory.buildSuccesMessage(null, "Not implemented", HttpStatus.NOT_IMPLEMENTED);
-  }
-/*
-  @PutMapping("/admin/author/{id}")
-  public ResponseEntity put(@RequestBody UserPut userModifications, @PathVariable UUID id) {
+    ValidationMessage validationMessage = authorValidation.validate(author);
+    if (!validationMessage.getIsValid()) {
+      return APIResponseFactory.buildMessageFromEntityValidation(validationMessage);
+    }
 
-    User user = userModifications.getUser();
-    UUID companyId = userModifications.getCompanyId();
-    User existing = userRepo.findById(id).orElse(null);
+    Author result = authorRepo.save(author);
+    if (result == null) {
+      return APIResponseFactory.buildErrorMessage(null, ENTITY_CREATION_FAILED, HttpStatus.NOT_FOUND);
+    }
+    return APIResponseFactory.buildSuccesMessage(result, ENTITY_CREATED, HttpStatus.CREATED);
+  }
+
+  @PutMapping("/admin/author/{id}")
+  public ResponseEntity put(@RequestBody Author author, @PathVariable UUID id) {
+    Author existing = authorRepo.findById(id).orElse(null);
+
     if (existing == null) {
       return APIResponseFactory.buildErrorMessage(null, ENTITY_NOT_FOUND, HttpStatus.NOT_FOUND);
     }
 
-    String email = MiddlewareUtils.getEmailFromToken(token);
-
-    // TODO added security level, do this in a filter.
-    if (!userRepo.findByEmail(email).map(User::getIsAdmin).orElse(false)) {
-      // if not admin, can modify only logged in user
-      if (!user.getEmail().equals(email)) {
-        return APIResponseFactory.buildErrorMessage(null, "Cannot modify other users", HttpStatus.UNAUTHORIZED);
-      }
-    }
-
-    if (companyId != null) {
-      Company company = companyRepo.findById(companyId).orElse(null);
-      if (company != null) {
-        user.setCompany(company);
-      }
-    }
-
-    // we don't want to change these, yet
-    user.setIsAdmin(existing.getIsAdmin());
-    user.setUid(existing.getUid());
-    user.setPassword(existing.getPassword());
-    user.setEmail(existing.getEmail());
-    user.setSaltedHash(existing.getSaltedHash());
-
-    ValidationMessage validationMessage = userValidation.validate(user);
+    author.setUid(existing.getUid());
+    ValidationMessage validationMessage = authorValidation.validate(author);
     if (!validationMessage.getIsValid()) {
       return APIResponseFactory.buildMessageFromEntityValidation(validationMessage);
     }
-    user = userRepo.save(user);
-    if (user == null) {
+
+    existing = authorRepo.save(author);
+    if (existing == null) {
       return APIResponseFactory.buildDefaultErrorMessage(null, ENTITY_ALTERATION_FAILED);
     }
 
-    return APIResponseFactory
-        .buildSuccesMessage(new UserResponseEntity(user), ENTITY_MODIFIED, HttpStatus.OK);
+    return APIResponseFactory.buildSuccesMessage(existing, ENTITY_MODIFIED, HttpStatus.OK);
   }
-*/
+
   @DeleteMapping("/admin/author/{id}")
   public ResponseEntity deleteById(@PathVariable UUID id) {
     Boolean wasRemoved = false;

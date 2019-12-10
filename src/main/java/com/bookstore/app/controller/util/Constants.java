@@ -27,4 +27,6 @@ public class Constants {
   public static final String INVALID_PASSWORD = "Invalid password.";
 
   public static final String USER_LOGGED_IN = "Logged in.";
+
+  public static final String INVALID_ENTITY = "Invalid entity";
 }

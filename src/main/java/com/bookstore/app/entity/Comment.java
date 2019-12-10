@@ -24,12 +24,12 @@ public class Comment {
 
   @ManyToOne
   @JoinColumn(name = "user_id")
-  @JsonBackReference(value = "user-comment")
+//  @JsonBackReference(value = "user-comment")
   private User user;
 
   @ManyToOne
   @JoinColumn(name = "book_id")
-  @JsonBackReference(value = "book-comment")
+//  @JsonBackReference(value = "book-comment")
   private Book referencedBook;
 
   // defaulting to current time when it was inserted into the database

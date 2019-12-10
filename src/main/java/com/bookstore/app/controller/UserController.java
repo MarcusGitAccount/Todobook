@@ -1,6 +1,5 @@
 package com.bookstore.app.controller;
 
-import com.bookstore.app.controller.request.model.UserPut;
 import com.bookstore.app.controller.response.model.UserResponseEntity;
 import com.bookstore.app.entity.Company;
 import com.bookstore.app.entity.User;
@@ -31,7 +30,7 @@ public class UserController {
   @Autowired
   private UserValidation userValidation;
 
-  @GetMapping("/api/user")
+  @GetMapping({"/api/user", "/admin/user"})
   public ResponseEntity get(@RequestHeader("authorization") String token) {
     String email = MiddlewareUtils.getEmailFromToken(token);
     User user = userRepo.findByEmail(email).orElse(null);

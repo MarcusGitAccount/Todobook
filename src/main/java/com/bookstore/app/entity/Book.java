@@ -42,15 +42,15 @@ public class Book {
       name = "book_categories",
       joinColumns = @JoinColumn(name = "book_id"),
       inverseJoinColumns = @JoinColumn(name = "category_id"))
-  @JsonManagedReference(value = "book-category") // to prevent infinite loop queries
+//  @JsonManagedReference(value = "book-category") // to prevent infinite loop queries
   private List<Category> categories;
 
   @ManyToMany(mappedBy = "wishlistBooks")
-  @JsonBackReference(value = "wishlist")
+//  @JsonBackReference(value = "wishlist")
   private List<User> usersWishlists;
 
   @OneToMany
   @JoinColumn(name = "comment_id")
-  @JsonManagedReference(value = "book-comment")
+//  @JsonManagedReference(value = "book-comment")
   private List<Comment> comments;
 }

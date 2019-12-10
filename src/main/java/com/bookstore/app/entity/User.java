@@ -42,12 +42,12 @@ public class User {
       name = "user_book_wishlist",
       joinColumns = @JoinColumn(name = "user_id"),
       inverseJoinColumns = @JoinColumn(name = "book_id"))
-  @JsonManagedReference(value = "wishlist")
+//  @JsonManagedReference(value = "wishlist")
   private List<Book> wishlistBooks;
 
   @OneToMany
   @JoinColumn(name = "comment_id")
-  @JsonManagedReference(value = "user-comment")
+//  @JsonManagedReference(value = "user-comment")
   private List<Comment> comments;
 
   // TODO: add loan books list

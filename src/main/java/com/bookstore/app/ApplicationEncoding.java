@@ -9,13 +9,13 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 @Slf4j
 public class ApplicationEncoding {
 
-  @Bean
-  public CharacterEncodingFilter characterEncodingFilter() {
-    CharacterEncodingFilter filter = new CharacterEncodingFilter();
-
-    filter.setEncoding("UTF-8");
-    filter.setForceEncoding(true);
-    log.info("Application encoding set to: " + filter.getEncoding());
-    return filter;
-  }
+//  @Bean
+//  public CharacterEncodingFilter characterEncodingFilter() {
+//    CharacterEncodingFilter filter = new CharacterEncodingFilter();
+//
+//    filter.setEncoding("UTF-8");
+//    filter.setForceEncoding(true);
+//    log.info("Application encoding set to: " + filter.getEncoding());
+//    return filter;
+//  }
 }

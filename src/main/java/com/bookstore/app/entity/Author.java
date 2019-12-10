@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -24,4 +25,8 @@ public class Author {
   // Description no longer than 300 characters
   @Column(length = 300)
   private String trivia;
+
+  @OneToMany
+  @JoinColumn(name = "book_id")
+  List<Book> books;
 }

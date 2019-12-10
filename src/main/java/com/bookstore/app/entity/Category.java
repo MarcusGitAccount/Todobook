@@ -30,7 +30,7 @@ public class Category {
   private String description;
 
   @ManyToMany(mappedBy = "categories")
-  @JsonBackReference(value = "book-category")
+//  @JsonBackReference(value = "book-category")
   private List<Book> books;
 
 }
