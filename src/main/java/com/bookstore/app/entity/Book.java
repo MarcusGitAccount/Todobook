@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
@@ -37,7 +36,6 @@ public class Book {
   // TODO: Make this relation many to many.
   @ManyToOne
   @JoinColumn(name = "author_id")
-//  @JsonBackReference(value = "book-author")
   private Author author;
 
   @ManyToMany
@@ -45,15 +43,11 @@ public class Book {
       name = "book_categories",
       joinColumns = @JoinColumn(name = "book_id"),
       inverseJoinColumns = @JoinColumn(name = "category_id"))
-//  @JsonManagedReference(value = "book-category") // to prevent infinite loop queries
   private List<Category> categories;
 
   @ManyToMany(mappedBy = "wishlistBooks")
-//  @JsonBackReference(value = "wishlist")
   private List<User> usersWishlists;
 
-  @OneToMany
-  @JoinColumn(name = "comment_id")
-//  @JsonManagedReference(value = "book-comment")
+  @OneToMany(mappedBy = "referencedBook")
   private List<Comment> comments;
 }

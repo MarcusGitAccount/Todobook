@@ -45,9 +45,7 @@ public class User {
 //  @JsonManagedReference(value = "wishlist")
   private List<Book> wishlistBooks;
 
-  @OneToMany
-  @JoinColumn(name = "comment_id")
-//  @JsonManagedReference(value = "user-comment")
+  @OneToMany(mappedBy = "user")
   private List<Comment> comments;
 
   // TODO: add loan books list

@@ -52,7 +52,7 @@ public class BookController {
 
   @PostMapping("/admin/book")
   public ResponseEntity post(@RequestBody Book book) {
-    ValidationMessage validationMessage = bookValidation.validate(Book.builder().build());
+    ValidationMessage validationMessage = bookValidation.validate(book);
     if (!validationMessage.getIsValid()) {
       return APIResponseFactory.buildMessageFromEntityValidation(validationMessage);
     }
