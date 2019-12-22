@@ -1,5 +1,9 @@
 package com.bookstore.app.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 import javax.persistence.*;
 import java.util.List;
@@ -10,6 +14,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "uid")
 public class User {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -31,8 +36,10 @@ public class User {
 
   private Boolean isAdmin;
 
+  @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
   private String password;
 
+  @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
   private String saltedHash;
 
   @ManyToMany
