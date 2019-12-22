@@ -107,6 +107,6 @@ public class CompanyController {
       return APIResponseFactory.buildErrorMessage(null, ENTITY_DELETE_FAILED, HttpStatus.NOT_FOUND);
     }
     companyRepo.delete(existing);
-    return APIResponseFactory.buildDefaultSuccesMessage(existing, ENTITY_DELETED);
+    return APIResponseFactory.buildDefaultSuccesMessage(null, ENTITY_DELETED);
   }
 }

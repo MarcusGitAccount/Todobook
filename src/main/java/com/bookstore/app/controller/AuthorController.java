@@ -95,6 +95,6 @@ public class AuthorController {
     }
     authorRepo.delete(existing);
     return APIResponseFactory
-        .buildDefaultSuccesMessage(existing, ENTITY_DELETED);
+        .buildDefaultSuccesMessage(null, ENTITY_DELETED);
   }
 }

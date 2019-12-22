@@ -50,4 +50,8 @@ public class Book {
 
   @OneToMany(mappedBy = "referencedBook")
   private List<Comment> comments;
+
+  @ManyToOne
+  @JoinColumn(name = "user_id")
+  private User loanedTo;
 }

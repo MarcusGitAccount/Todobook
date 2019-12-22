@@ -27,13 +27,12 @@ public class Category {
   @Column(name = "uid", columnDefinition = "CHAR(36)")
   private UUID uid;
 
+  @Column(unique = true)
   private String name;
 
   @Column(length = 300)
   private String description;
 
   @ManyToMany(mappedBy = "categories")
-//  @JsonBackReference(value = "book-category")
   private List<Book> books;
-
 }

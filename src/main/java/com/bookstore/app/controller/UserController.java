@@ -134,6 +134,6 @@ public class UserController {
     }
     userRepo.delete(existing);
     return APIResponseFactory
-        .buildDefaultSuccesMessage(new UserResponseEntity(existing), ENTITY_DELETED);
+        .buildDefaultSuccesMessage(null, ENTITY_DELETED);
   }
 }

@@ -150,7 +150,6 @@ public class CommentController {
     if (!user.getIsAdmin() && !user.getEmail().equals(comment.getUser().getEmail())) {
       return false;
     }
-
     return true;
   }
 }

@@ -1,9 +1,7 @@
 package com.bookstore.app.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import javax.persistence.*;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
@@ -42,11 +40,11 @@ public class User {
       name = "user_book_wishlist",
       joinColumns = @JoinColumn(name = "user_id"),
       inverseJoinColumns = @JoinColumn(name = "book_id"))
-//  @JsonManagedReference(value = "wishlist")
   private List<Book> wishlistBooks;
 
   @OneToMany(mappedBy = "user")
   private List<Comment> comments;
 
-  // TODO: add loan books list
+  @OneToMany(mappedBy = "loanedTo")
+  private List<Book> loans;
 }

@@ -2,12 +2,9 @@ package com.bookstore.app.controller;
 
 import com.bookstore.app.entity.Author;
 import com.bookstore.app.entity.Book;
-import com.bookstore.app.entity.Book;
 import com.bookstore.app.repo.AuthorRepo;
 import com.bookstore.app.repo.BookRepo;
-import com.bookstore.app.repo.BookRepo;
 import com.bookstore.app.responsefactory.APIResponseFactory;
-import com.bookstore.app.validation.BookValidation;
 import com.bookstore.app.validation.BookValidation;
 import com.bookstore.app.validation.util.ValidationMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -114,6 +111,6 @@ public class BookController {
       return APIResponseFactory.buildErrorMessage(null, ENTITY_DELETE_FAILED, HttpStatus.NOT_FOUND);
     }
     bookRepo.delete(existing);
-    return APIResponseFactory.buildDefaultSuccesMessage(existing, ENTITY_DELETED);
+    return APIResponseFactory.buildDefaultSuccesMessage(null, ENTITY_DELETED);
   }
 }
