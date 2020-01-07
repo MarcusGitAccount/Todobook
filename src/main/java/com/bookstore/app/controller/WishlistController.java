@@ -53,7 +53,7 @@ public class WishlistController {
     return APIResponseFactory.buildDefaultSuccesMessage(book, "Book added to wishlist.");
   }
 
-  @DeleteMapping({"/admin/loan", "/api/loan"})
+  @DeleteMapping({"/admin/wishlist", "/api/wishlist"})
   public ResponseEntity removeBook(@RequestBody Book book, @RequestHeader("authorization") String token) {
     String userEmail = MiddlewareUtils.getEmailFromToken(token);
     User user = userRepo.findByEmail(userEmail).orElse(null);
