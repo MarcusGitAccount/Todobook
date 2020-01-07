@@ -62,8 +62,7 @@ public class UserController {
 
    // Users are to be created only via sign up
   @PostMapping("/admin/user")
-  public ResponseEntity post(@RequestBody User user,
-                             @RequestBody UUID companyId) {
+  public ResponseEntity post(@RequestBody User user) {
     return APIResponseFactory.buildSuccesMessage(null, "Not implemented", HttpStatus.NOT_IMPLEMENTED);
   }
 

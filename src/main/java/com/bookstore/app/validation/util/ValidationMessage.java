@@ -16,6 +16,8 @@ public class ValidationMessage {
 
   public ValidationMessage addErrorMessage(String errorMessage) {
     this.errorMessages.add(errorMessage);
+    this.setIsValid(false);
+
     return this;
   }
 
