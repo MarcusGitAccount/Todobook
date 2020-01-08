@@ -16,7 +16,7 @@ public class WebConfig implements WebMvcConfigurer {
     log.info("Configuring application to enable corss origin calls.");
 
     registry.addMapping("/**")
-        .allowedOrigins("http://localhost:4200")
+        .allowedOrigins("*")
         .allowedMethods("GET", "PUT", "POST", "DELETE");
   }
 }
