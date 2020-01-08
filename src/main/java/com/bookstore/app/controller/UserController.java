@@ -31,6 +31,7 @@ public class UserController {
   private UserValidation userValidation;
 
   @GetMapping({"/api/user", "/admin/user"})
+  @CrossOrigin(origins = "http://localhost:4200")
   public ResponseEntity get(@RequestHeader("authorization") String token) {
     String email = MiddlewareUtils.getEmailFromToken(token);
     User user = userRepo.findByEmail(email).orElse(null);

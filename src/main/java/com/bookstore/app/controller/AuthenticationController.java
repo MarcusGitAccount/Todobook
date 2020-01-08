@@ -35,6 +35,7 @@ public class AuthenticationController {
   private UserValidation userValidation;
 
   @PostMapping("/signup")
+  @CrossOrigin(origins = "http://localhost:4200")
   public ResponseEntity signup(@RequestBody User user) {
     ValidationMessage validationMessage = userValidation.validateSignup(user);
 
@@ -60,6 +61,7 @@ public class AuthenticationController {
   }
 
   @PostMapping("/login")
+  @CrossOrigin(origins = "http://localhost:4200")
   public ResponseEntity login(@RequestBody User user) {
     // Sent data might be uncompleted
     User existing = userRepo.findByEmail(user.getEmail()).orElse(null);
@@ -110,6 +112,7 @@ public class AuthenticationController {
   }
 
   @PostMapping("/logout")
+  @CrossOrigin(origins = "http://localhost:4200")
   public ResponseEntity logout(@RequestHeader("authorization") String token) {
     if (token == null) {
       return APIResponseFactory.buildDefaultErrorMessage(null, "Token is empty");
