@@ -13,7 +13,7 @@ import java.io.IOException;
 
 @WebFilter(urlPatterns = {"/api/*", "/admin/*"})
 @Component
-@Order(0)
+@Order(1)
 public class AuthenticationFilter implements Filter {
   @SuppressWarnings("SpringJavaAutowiringInspection")
   @Autowired
