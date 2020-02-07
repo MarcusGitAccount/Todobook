@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
-@Order(2)
+@Order(1)
 public class AdminFilter implements Filter {
 
   @Autowired

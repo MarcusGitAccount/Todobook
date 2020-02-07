@@ -19,7 +19,6 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 import java.util.Calendar;
-import java.util.List;
 
 @RestController
 @RequestMapping("/auth")
